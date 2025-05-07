@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1746652010 source:c:\users\isaac\onedrive\desktop\tptopicos\main.c
+1746654725 source:c:\users\isaac\onedrive\desktop\tptopicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	"validacion.h"
 
-1746647150 c:\users\isaac\onedrive\desktop\tptopicos\validacion.h
+1746655392 c:\users\isaac\onedrive\desktop\tptopicos\validacion.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -15,12 +15,12 @@
 1746561068 source:c:\users\isaac\onedrive\desktop\tptopicos\validaciontry.c
 	"validacion.h"
 
-1746651998 source:c:\users\isaac\onedrive\desktop\tptopicos\validacion.c
+1746655392 source:c:\users\isaac\onedrive\desktop\tptopicos\validacion.c
 	"validacion.h"
 
-1746638861 c:\users\isaac\onedrive\desktop\tptopicos\general.h
+1746655249 c:\users\isaac\onedrive\desktop\tptopicos\general.h
 	<stddef.h>
 
-1746638873 source:c:\users\isaac\onedrive\desktop\tptopicos\general.c
+1746655229 source:c:\users\isaac\onedrive\desktop\tptopicos\general.c
 	"general.h"
 
