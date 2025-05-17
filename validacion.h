@@ -43,6 +43,9 @@ int ValidarEstado(char est);
 int validarFecha(t_fecha fecha);
 int cantDias(int mes, int anio);
 int anioBisiesto(int anio);
-
+int compararFecha(t_fecha fecha1, t_fecha fecha2);
+int validarFechaNac(t_fecha fecha, t_fecha fecha_proc);
+int validarFechaAfiliacion(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Nac);
+int validarFechaCuotaPaga(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Af);
 
 #endif // VALIDACION_H_INCLUDED

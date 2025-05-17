@@ -98,3 +98,90 @@ int anioBisiesto(int anio)
 
     return FALSE;
 }
+int compararFecha(t_fecha fecha1, t_fecha fecha2){
+
+    int cmp = fecha1.anio - fecha2.anio;
+
+    if(cmp)
+        return cmp;
+
+    cmp = fecha1.mes - fecha2.mes;
+
+    if (cmp)
+        return cmp;
+
+    return fecha1.dia - fecha2.dia;
+}
+
+int validarFechaNac(t_fecha fecha, t_fecha fecha_proc){
+
+    fecha_proc.anio = fecha_proc.anio -10;
+
+    if((validarFecha(fecha))
+       &&(compararFecha(fecha, fecha_proc) < 0)){
+            return TRUE
+    }
+    return FALSE;
+}
+
+int validarFechaAfiliacion(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Nac){
+
+    if((validarFecha(fecha))
+       &&(compararFecha(fecha, fecha_proc) <= 0)
+       &&(compararFecha(fecha, fecha_Nac) > 0)){
+                return TRUE
+    }
+    return FALSE;
+}
+
+validarFechaCuotaPaga(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Af){
+
+    if((compararFecha(fecha, fecha_af) > 0)
+       && (compararFecha(fecha, fecha_proc) <= 0){
+            return TRUE
+        }
+    return FALSE;
+}int compararFecha(t_fecha fecha1, t_fecha fecha2){
+
+    int cmp = fecha1.anio - fecha2.anio;
+
+    if(cmp)
+        return cmp;
+
+    cmp = fecha1.mes - fecha2.mes;
+
+    if (cmp)
+        return cmp;
+
+    return fecha1.dia - fecha2.dia;
+}
+
+int validarFechaNac(t_fecha fecha, t_fecha fecha_proc){
+
+    fecha_proc.anio = fecha_proc.anio -10;
+
+    if((validarFecha(fecha))
+       &&(compararFecha(fecha, fecha_proc) < 0)){
+            return TRUE
+    }
+    return FALSE;
+}
+
+int validarFechaAfiliacion(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Nac){
+
+    if((validarFecha(fecha))
+       &&(compararFecha(fecha, fecha_proc) <= 0)
+       &&(compararFecha(fecha, fecha_Nac) > 0)){
+                return TRUE
+    }
+    return FALSE;
+}
+
+validarFechaCuotaPaga(t_fecha fecha, t_fecha fecha_proc, t_fecha fecha_Af){
+
+    if((compararFecha(fecha, fecha_af) > 0)
+       && (compararFecha(fecha, fecha_proc) <= 0){
+            return TRUE
+        }
+    return FALSE;
+}
