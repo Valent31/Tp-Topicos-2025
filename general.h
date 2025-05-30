@@ -8,10 +8,11 @@
 #define ES_LETRA(X) (( (X) >= 'a' && (X) <= 'z' || (X)>= 'A' && (X) <= 'Z'))
 #define ES_NUMERO(X) ((X)>='0' && (X) <='9')
 #define ES_LMIN(X) (( (X) >= 'a' && (X) <= 'z'))
+
 int str_lenght(char * str);
 int  str_cmp(char* a, char *b);
 void strtoupper(char *str);
 void eliminate_str(char *str, size_t i, size_t cant);
-
+void returnDir(void * vec, void *el, size_t tam, size_t tamV);
 
 #endif // GENERAL_H_INCLUDED

@@ -1,7 +1,9 @@
 #include "validacion.h"
-int ValidarDni(int n){
-    return (n<10000 || n>10000000)? FALSE : TRUE;
-}
+/**************************************************
+*                                                 *
+*          FUNCIONES PARA LA NORMALIZACION        *
+*                                                 *
+***************************************************/
 
 void eliminate_tab(char *str){
     while(*str){
@@ -62,7 +64,49 @@ void check(char *str, int c){
         memmove(str-1, str, str_lenght(str)+1);
     }
 }
-char * ValidarNyA(char * cad, int max){
+int validarString(char *str, int tam){
+    int i= 0;
+    while(i < tam){
+        if(*(str+i) !='\0'){
+            i++;
+        }
+        else{
+            return 1;
+        }
+    }
+    return 0;
+}
+int validarStringAndTwo(char *str, int tam){
+    int i = 0;
+    int found = 0;
+    int first = 0;
+    int second = 0;
+    int isspace = 1;
+    while(i < tam && found!= 1){
+        if(second== 0 && ES_LETRA(str[i])){
+            if(first ==0){
+                isspace = 0;
+                first = 1;
+            }
+            else{
+                if(isspace == 1){
+                    second =1;
+                }
+            }
+        }
+        else{
+            if(str[i] == '\0'){
+                found = 1;
+            }
+            else{
+                isspace =1;
+            }
+        }
+        i++;
+    }
+    return (second ==1 && found ==1)?TRUE:FALSE;
+}
+char * normalizar(char * cad, int max){
     char *lec, *com1;
     int espacio =0;
     int checked = 0;
@@ -132,6 +176,9 @@ char * ValidarNyA(char * cad, int max){
     }
     return cad;
 }
+/**********************************************************
+*                VALIDACION   FECHA                       *
+***********************************************************/
 int cantDias(int mes, int anio)
 {
     static int meses[12] = {31,28,31,30,31,31,30,31,30,31,30,31};
@@ -144,22 +191,58 @@ int cantDias(int mes, int anio)
 
 int anioBisiesto(int anio)
 {
-    if((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0)
-        return TRUE;
-    else
-        return FALSE;
+    return ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0)?TRUE:FALSE;
 }
 int validarFecha(t_fecha fecha)
 {
-    if(fecha.anio >= 1900)
-        if(fecha.mes >= 1 && fecha.mes <=12 && fecha.dia <= cantDias(fecha.mes, fecha.anio) && fecha.dia>=1)
+    if(fecha.anio >= 1900){
+        if(fecha.mes >= 1 && fecha.mes <=12 && fecha.dia <= cantDias(fecha.mes, fecha.anio) && fecha.dia>=1){
             return TRUE;
+        }
+    }
     return FALSE;
+}
+int cmpFecha(const t_fecha f1, const t_fecha f2){
+    if(f1.anio != f2.anio){
+        return (f1.anio>f2.anio)?1:-1;
+    }
+    if(f1.mes != f2.mes){
+        return (f1.mes>f2.mes)?1:-1;
+    }
+    if(f1.dia != f2.dia){
+        return (f1.dia > f2.dia)?1:-1;
+    }
+    return 0;
+}
+t_fecha difFechas(const t_fecha *fecIni, const t_fecha *fecFin){
+    static const char dias[2][13] = {
+        { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+        { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }};
+    t_fecha edad;
+    edad = *fecFin;
+    if((edad.dia -= fecIni->dia)<0){
+        edad.mes--;
+        edad.dia += dias[anioBisiesto(edad.anio)][edad.mes];
+    }
+    if((edad.mes -= fecIni->mes)<0){
+        edad.mes +=12;
+        edad.anio--;
+    }
+    edad.anio -= fecIni->anio;
+    return edad;
+}
+
+/**********************************************************
+//               VALIDACION   DATOS                       *
+/**********************************************************/
+int ValidarDni(long dni){
+    return (dni>10000 && dni<100000000)?TRUE:FALSE;
 }
 int ValidarSexo(char s){
     s = toUpper(s);
     return (s=='F' || s=='M')? TRUE:FALSE;
 }
+
 int ValidarCat(char cat[10]){
     const char *opc[]={"MENOR","ADULTO","VITALICIO","HONORARIO"};
     int i;
@@ -174,11 +257,109 @@ int ValidarEstado(char e){
     e= toUpper(e);
     return (e=='A' || e=='B')? TRUE:FALSE;
 }
+int validar(t_socio socio, t_fecha fProceso){
+    if(ValidarDni(socio.DNI) == FALSE){
+        printf("DNI");
+        return FALSE;
+    }
+    if(validarStringAndTwo(&socio.ApellYNom, 60)==0){
+        printf("CADENA");
+        return FALSE;
+    }
+    t_fecha aux;
+    aux = difFechas(&socio.FechNacimiento, &fProceso);
+    if(validarFecha(socio.FechNacimiento)==FALSE || aux.anio<10){
+        printf("NACIMIENTO");
+        return FALSE;
+    }
+    if(ValidarSexo(socio.sex)==FALSE){
+        printf("SEXO");
+        return FALSE;
+    }
+    if(validarFecha(socio.FechAfil)==FALSE){
+        printf("FECHA AFILIACION");
+        return FALSE;
+    }
+    if(!(cmpFecha(socio.FechAfil, fProceso)<=0 && cmpFecha(socio.FechAfil, socio.FechNacimiento)>0)){
+        printf("FECHA AFILIACION, 2ndo bucle");
+        return FALSE;
+    }
+    if(ValidarCat(socio.Cat)==FALSE){
+        printf("CATEGORIA");
+        return FALSE;
+    }
+    if(validarFecha(socio.FechUltCuota)==FALSE){
+        printf("ULTIMA CUOTA, 1ER BUCLE");
+        return FALSE;
+    }
+    if(cmpFecha(socio.FechUltCuota, socio.FechAfil)<=0||cmpFecha(socio.FechUltCuota, fProceso)>0){
+        printf("ULTIMA CUOTA, 2DO BUCLE");
+        return FALSE;
+    }
+    if(ValidarEstado(socio.estado)==0){
+        printf("ESTADO");
+    }
+    return ValidarEstado(socio.estado);
+}
+
+/**********************************************************
+//               FUNCIONES PRINCIPALES                    *
+/**********************************************************/
+void crearBinario(){
+    char linea[BUFFER];
+    t_socio socio;
+    t_fecha fProceso;
+    printf("INGRESE FECHA DE PROCESO:");
+    scanf("%i %i %i",&fProceso.dia, &fProceso.mes, &fProceso.anio);
+    FILE *pt = fopen("socios.txt", "rt");
+    FILE *pb = fopen("socios.dat","wb");
+    FILE *pError = fopen("error.txt","wt");
+    char aux[60];
+    if(pt==NULL || pb ==NULL || pError == NULL){
+        printf("ERROR AL CREAR BINARIO");
+        exit(1);
+    }
+    while(fgets(linea, sizeof(linea),pt)){
+        cargarSocio(linea, &socio);
+        if(validar(socio,fProceso)!=TRUE){
+            cargarError(pError, &socio);
+        }
+        else{
+            strcpy(aux, normalizar(socio.ApellYNom));
+            strcpy(socio.ApellYNom,aux);
+            fwrite(&socio, sizeof(t_socio), 1,pb);
+        }
+    }
+    fclose(pt);
+    fclose(pb);
+    fclose(pError);
+}
+void cargarSocio(char *pt, t_socio *socio){
+    sscanf(pt, "%d;%59[^;];%c;%d;%d;%d;%c;%d;%d;%d;%9[^;];%d;%d;%d;%c",
+           &socio->DNI, socio->ApellYNom, &socio->FechNacimiento.dia,
+           &socio->FechNacimiento.mes, &socio->FechNacimiento.anio,
+           &socio->sex, &socio->FechAfil.dia, &socio->FechAfil.mes,
+           &socio->FechAfil.anio, socio->Cat, &socio->FechUltCuota.dia,
+           &socio->FechUltCuota.mes, &socio->FechUltCuota.anio,
+           &socio->estado);
+}
+
+void cargarError(FILE *pError, t_socio *socio){
+    fprintf(pError, "%d;%s;%c;%i;%i;%i;%c;%i;%i;%i;%s;%i;%i;%i;%c\n",
+           socio->DNI, socio->ApellYNom, socio->FechNacimiento.dia,
+           socio->FechNacimiento.mes, socio->FechNacimiento.anio,
+           socio->sex, socio->FechAfil.dia, socio->FechAfil.mes,
+           socio->FechAfil.anio, socio->Cat, socio->FechUltCuota.dia,
+           socio->FechUltCuota.mes, socio->FechUltCuota.anio,
+           socio->estado);
+}
+//Primera Parte, validacion completa
+
 /*
 char * ValidarApellyNom(const char *cad){
-    //PePe GALLeta, Raul
+    PePe GALLeta, Raul
     cad = Normalizar(*cad);
-    //Pepe Galleta, Raul
+    Pepe Galleta, Raul
     char * lec = cad;
     while(*lec ){
         if(*lec == ','){
