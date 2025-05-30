@@ -322,11 +322,12 @@ void crearBinario(){
     while(fgets(linea, sizeof(linea),pt)){
         cargarSocio(linea, &socio);
         if(validar(socio,fProceso)!=TRUE){
-            cargarError(pError, &socio);
+            cargarError(pError, linea);
         }
         else{
-            strcpy(aux, normalizar(socio.ApellYNom));
+            strcpy(aux, normalizar(socio.ApellYNom, 60));
             strcpy(socio.ApellYNom,aux);
+            mostrarSocio(&socio);
             fwrite(&socio, sizeof(t_socio), 1,pb);
         }
     }
@@ -335,7 +336,7 @@ void crearBinario(){
     fclose(pError);
 }
 void cargarSocio(char *pt, t_socio *socio){
-    sscanf(pt, "%d;%59[^;];%c;%d;%d;%d;%c;%d;%d;%d;%9[^;];%d;%d;%d;%c",
+    sscanf(pt, "%d;%59[^;];%d;%d;%d;%c;%d;%d;%d;%9[^;];%d;%d;%d;%c",
            &socio->DNI, socio->ApellYNom, &socio->FechNacimiento.dia,
            &socio->FechNacimiento.mes, &socio->FechNacimiento.anio,
            &socio->sex, &socio->FechAfil.dia, &socio->FechAfil.mes,
@@ -344,8 +345,11 @@ void cargarSocio(char *pt, t_socio *socio){
            &socio->estado);
 }
 
-void cargarError(FILE *pError, t_socio *socio){
-    fprintf(pError, "%d;%s;%c;%i;%i;%i;%c;%i;%i;%i;%s;%i;%i;%i;%c\n",
+void cargarError(FILE *pError, char *linea){
+    fprintf(pError,"%s",linea);
+}
+void mostrarSocio(t_socio * socio){
+    printf("%d;%s;%d;%d;%d;%c;%d;%d;%d;%s;%d;%d;%d;%c\n",
            socio->DNI, socio->ApellYNom, socio->FechNacimiento.dia,
            socio->FechNacimiento.mes, socio->FechNacimiento.anio,
            socio->sex, socio->FechAfil.dia, socio->FechAfil.mes,

@@ -30,3 +30,32 @@
 1747536873 c:\users\isaac\onedrive\desktop\tptopicos\indice.h
 	"general.h"
 
+1748632908 source:c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\general.c
+	"general.h"
+
+1748632908 c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\general.h
+	<stddef.h>
+
+1748632908 source:c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\indice.c
+	"indice.h"
+
+1748632908 c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\indice.h
+	"general.h"
+
+1748632908 source:c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\main.c
+	<stdio.h>
+	<stdlib.h>
+	"general.h"
+	"validacion.h"
+
+1748632908 c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\validacion.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<stddef.h>
+	"general.h"
+
+1748637344 source:c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\validacion.c
+	"validacion.h"
+
