@@ -59,3 +59,36 @@
 1748637344 source:c:\users\isaac\onedrive\desktop\pruebastopicos\pruebas\tp-topicos-2025\validacion.c
 	"validacion.h"
 
+1748825744 source:c:\users\isaac\downloads\tptopicos\tptopicos\general.c
+	"general.h"
+
+1748831842 c:\users\isaac\downloads\tptopicos\tptopicos\general.h
+	<stddef.h>
+
+1748832328 source:c:\users\isaac\downloads\tptopicos\tptopicos\main.c
+	<stdio.h>
+	<stdlib.h>
+	"general.h"
+	"validacion.h"
+	"indice.h"
+
+1748825744 c:\users\isaac\downloads\tptopicos\tptopicos\validacion.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<stddef.h>
+	"general.h"
+
+1748825744 source:c:\users\isaac\downloads\tptopicos\tptopicos\validacion.c
+	"validacion.h"
+
+1748832624 source:c:\users\isaac\downloads\tptopicos\tptopicos\indice.c
+	"indice.h"
+
+1748832233 c:\users\isaac\downloads\tptopicos\tptopicos\indice.h
+	<stdlib.h>
+	<stdio.h>
+	"validacion.h"
+	"general.h"
+

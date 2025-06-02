@@ -14,5 +14,5 @@ int  str_cmp(char* a, char *b);
 void strtoupper(char *str);
 void eliminate_str(char *str, size_t i, size_t cant);
 void returnDir(void * vec, void *el, size_t tam, size_t tamV);
-
+int binarySearch (void *vec, void *target, size_t ce, size_t tam, int (*cmp) (void*, void*));
 #endif // GENERAL_H_INCLUDED
